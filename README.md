@@ -7,7 +7,7 @@ This MACRO11 was forked from Richard Krebiehls version in 2008. Thanks!
 
 Changes since then:
 * restructured the sources
-* bugfixes
+* bugfixes. For example "JMP Rn is illegal" on "jmp (rx)".
 * added option "-listhex" to generate listings in hex instead of octal (helpful for work with modern logic analyzers).
 
 Also see my [MACRO11 page](http://www.retrocmp.com/tools/macro11).
