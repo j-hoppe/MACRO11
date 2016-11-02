@@ -10,4 +10,8 @@ Changes since then:
 * bugfixes
 * added option "-listhex" to generate listings in hex instead of octal (helpful for work with modern logic analyzers).
 
+<<<<<<< HEAD
 Also see my [MACRO11 page](http://www.retrocmp.com/tools/macro11).
+=======
+Also see the [MACRO11 page](http://www.retrocmp.com/tools/macro11).
+>>>>>>> e43d0263d9e7df0ab159240d08daa61196941458
