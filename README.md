@@ -10,4 +10,4 @@ Changes since then:
 * bugfixes. For example "JMP Rn is illegal" on "jmp (rx)".
 * added option "-listhex" to generate listings in hex instead of octal (helpful for work with modern logic analyzers).
 
-Also see my [MACRO11 page](http://www.retrocmp.com/tools/macro11).
+Also see my [MACRO11 page](http://www.retrocmp.com/tools/macro-11-on-windows).
