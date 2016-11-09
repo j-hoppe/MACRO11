@@ -63,7 +63,7 @@ void list_source(
         if (!binline)
             binline = memcheck(malloc(sizeof(LSTFORMAT) + 16));
 
-        sprintf(binline, "%*s%*d", SIZEOF_MEMBER(LSTFORMAT, flag), "", SIZEOF_MEMBER(LSTFORMAT, line_number),
+        sprintf(binline, "%*s%*d", (int)SIZEOF_MEMBER(LSTFORMAT, flag), "", (int)SIZEOF_MEMBER(LSTFORMAT, line_number),
                 str->line);
     }
 }

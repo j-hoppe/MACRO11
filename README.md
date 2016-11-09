@@ -11,3 +11,8 @@ Changes since then:
 * added option "-listhex" to generate listings in hex instead of octal (helpful for work with modern logic analyzers).
 
 Also see my [MACRO11 page](http://www.retrocmp.com/tools/macro-11-on-windows).
+
+Apparently in 2009 my code was forked into github, without notifying me.
+See github.com/shattered/macro11 !
+
+The changes made there were also merged into this code in Nov 2016.
