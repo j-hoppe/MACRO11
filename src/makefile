@@ -18,14 +18,14 @@ all: macro11 dumpobj
 tags: macro11 dumpobj
 	ctags *.c *.h
 
-macro11: $(MACRO11_OBJS) Makefile
+macro11: $(MACRO11_OBJS) makefile
 	$(CC) $(CFLAGS) -o macro11 $(MACRO11_OBJS) -lm
 
-dumpobj: $(DUMPOBJ_OBJS) Makefile
+dumpobj: $(DUMPOBJ_OBJS) makefile
 	$(CC) $(CFLAGS) -o dumpobj $(DUMPOBJ_OBJS)
 
-MACRO11_OBJS: Makefile
-DUMPOBJ_OBJS: Makefile
+MACRO11_OBJS: makefile
+DUMPOBJ_OBJS: makefile
 
 clean:
 	-rm -f $(MACRO11_OBJS) $(DUMPOBJ_OBJS) macro11 dumpobj
