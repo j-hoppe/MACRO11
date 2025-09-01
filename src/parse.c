@@ -280,7 +280,6 @@ int parse_float(
     int             i;          /* Number of fields converted by sscanf */
     int             n;          /* Number of characters converted by sscanf */
     int             sexp;       /* Signed exponent */
-    unsigned        exp;        /* Unsigned excess-128 exponent */
     unsigned        sign = 0;   /* Sign mask */
 
     i = sscanf(cp, "%lf%n", &d, &n);
@@ -297,18 +296,15 @@ int parse_float(
     }
 
     frac = frexp(d, &sexp);            /* Separate into exponent and mantissa */
-    if (sexp < -128 || sexp > 127)
-        return 0;                      /* Exponent out of range. */
-
-    exp = sexp + 128;                  /* Make excess-128 mode */
-    exp &= 0xff;                       /* express in 8 bits */
 
     if (frac < 0) {
         sign = 0100000;                /* Negative sign */
         frac = -frac;                  /* fix the mantissa */
     }
 
-    /* The following big literal is 2 to the 49th power: */
+    /* The following big literal is 1<<56 */
+    /* converts 0.500..0.999 to 0x80.0000.0000.0000..0xFF.FFFF.FFFF.FFFF */
+    /* bit 55 is hidden bit, always 1 */
     ufrac = (ulong64) (frac * 72057594037927936.0);     /* Align fraction bits */
 
     /* Round from FLT4 to FLT2 */
@@ -316,13 +312,20 @@ int parse_float(
         ufrac += 0x80000000;           /* Round to nearest 32-bit
                                           representation */
 
-        if (ufrac > 0x200000000000) {  /* Overflow? */
+        if ((ufrac >> 56) & 1) {       /* Overflow? */
             ufrac >>= 1;               /* Normalize */
-            exp--;
+            sexp++;
         }
     }
 
-    flt[0] = (unsigned) (sign | (exp << 7) | ((ufrac >> 48) & 0x7F));
+    if ((!(ufrac >> 55) & 1)) abort();  /* should have hidden bit */
+    if (ufrac >> 56) abort();           /* shouldn't have any more bits */
+
+    sexp += 128;                       /* exponent is 128 for 0.5 */
+    if ((sexp < 0) || (sexp > 255))
+        return 0;                      /* Exponent out of range. */
+
+    flt[0] = (unsigned) (sign | (sexp << 7) | ((ufrac >> 48) & 0x7F));
     if (size > 1) {
         flt[1] = (unsigned) ((ufrac >> 32) & 0xffff);
         if (size > 2) {
